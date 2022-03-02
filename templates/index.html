@@ -4,9 +4,28 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="/static/app.css">
 </head>
 <body>
-    
+    <header>
+        Product Catalogue
+    </header>
+
+    <div>
+        <h1>
+            Hi, {{ user.username }}. Enter an MPN to check if it exists in our catalogue.
+        </h1>
+        <h2>
+            <form action="" method="post">
+            {{ form.mpn }}
+            {{ form.mn(size=32) }}
+            <p>
+                {{ form.submit() }}
+            </p>
+        </form>
+        </h2>
+    </div>
 </body>
 </html>
