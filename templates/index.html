@@ -12,20 +12,20 @@
     <header>
         Product Catalogue
     </header>
+    <h1>
+        <a href="/login">Login</a>
+    </h1>
 
-    <div>
-        <h1>
-            Hi, {{ user.username }}. Enter an MPN to check if it exists in our catalogue.
-        </h1>
-        <h2>
-            <form action="" method="post">
-            {{ form.mpn }}
-            {{ form.mn(size=32) }}
-            <p>
-                {{ form.submit() }}
-            </p>
-        </form>
-        </h2>
-    </div>
+    {% with messages = get_flashed_messages() %}
+    {% if messssages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+
 </body>
 </html>
