@@ -3,7 +3,7 @@
 {% block content %}
     <div>
         <h1>
-            Hi, {{ user.username }}. Enter an MPN to check if it exists in our catalogue.
+            Hi, {{ current_user.email_address }}. Enter an MPN to check if it exists in our catalogue.
         </h1>
         <h2>
             <form action="" method="post">

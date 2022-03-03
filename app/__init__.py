@@ -13,7 +13,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-from app import routes, models
 
 
 #login instance
@@ -21,4 +20,6 @@ login = LoginManager(app)
 login.login_view = 'login'
 
 # authorized_users = {1:'mtamer@rocketchips.com',2:'jpierce@rocketchips.com',3:'tjwhitney@rocketchips.com',4:'awong@fusionww.com'}
+
+from app import routes, models
 
