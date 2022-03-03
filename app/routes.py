@@ -32,15 +32,18 @@ def search():
     # I am going to need to do the logic to search for MPNs here
     if form.validate_on_submit():
         part = form.mpn.data
-        catalogue = pd.read_csv('/data/catalogue.csv')
-        if part in catalogue['MPNs']:
+        catalogue = pd.read_csv('/data/catalogue.csv').to_list()
+        if part in catalogue:
             # if the part is in the catalog, return the result on a new page
             response = True
-            return '<p>This part is in the catalogue.</p>'
-            # return render_template('results.html', title = 'Results', part=part, response=response)
-        else:
+            flash('It is in the catalogue.')
+        elif part not in catalogue:
             response = False
-            return '<p>NOT in the catalogue yet, please add.</p>'
-            # return render_template('results.html', title = 'Results', part=part, response=response)
+            flash('It is NOT in the catalogue.')
+    else:
+        return render_template('search.html', title='Search', form=form)
 
-    return render_template('search.html', title='Search', form=form)
+
+@app.route("/results", methods=['GET','POST'])
+def results():
+    pass
