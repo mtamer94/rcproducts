@@ -6,6 +6,7 @@ from app import app, db
 from app.forms import LoginForm, mpnForm
 from app.models import User
 import pandas as pd
+import time
 
 
 @app.route("/")
@@ -26,6 +27,8 @@ def login():
         login_user(user, remember=form.remember_me.data)
     return render_template('login.html', title = 'Sign In', form=form)
 
+
+# the problems start here
 @app.route("/search", methods=['GET','POST'])
 def search():
     form = mpnForm()
@@ -37,9 +40,11 @@ def search():
             # if the part is in the catalog, return the result on a new page
             response = True
             flash('It is in the catalogue.')
+            return redirect(url_for('search'))
         elif part not in catalogue:
             response = False
             flash('It is NOT in the catalogue.')
+            return redirect(url_for('search'))
     else:
         return render_template('search.html', title='Search', form=form)
 
