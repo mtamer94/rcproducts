@@ -1,21 +1,16 @@
 {% extends "index.html" %}
 
+
 {% block content %}
 
 <div>
-    <h1>
-        <p>
-            {% if response == True %}
-            <p2>
-                {{ part }} is in the catalogue.
-            </p2>
-            {% else %}
-            <p2>
-                {{ part }} is not in the catalogue.
-            </p2>
-            {% endif %}
-        </p>
-    </h1>
+    <p>
+        {% if inc == TRUE %}
+            {{ pt }} is in the catalogue.
+        {% else %}
+            {{ pt }} is not in the catalogue.
+        {% endif %}
+    </p>
 </div>
 
 

@@ -1,4 +1,4 @@
-from pickle import TRUE
+from pickle import FALSE, TRUE
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
@@ -6,7 +6,11 @@ from app import app, db
 from app.forms import LoginForm, mpnForm
 from app.models import User
 import pandas as pd
-import time
+from os.path import join, dirname, realpath
+
+
+data_path = join(dirname(realpath(__file__)), 'data/catalogue.csv')
+
 
 
 @app.route("/")
@@ -35,20 +39,19 @@ def search():
     # I am going to need to do the logic to search for MPNs here
     if form.validate_on_submit():
         part = form.mpn.data
-        catalogue = pd.read_csv('/data/catalogue.csv').to_list()
-        if part in catalogue:
+        included = ''
+        catalogue = pd.read_csv(data_path)
+        if part in catalogue['MPNs'].values:
             # if the part is in the catalog, return the result on a new page
-            response = True
-            flash('It is in the catalogue.')
-            return redirect(url_for('search'))
-        elif part not in catalogue:
-            response = False
-            flash('It is NOT in the catalogue.')
-            return redirect(url_for('search'))
+            included = TRUE
+            return redirect(url_for('results', pt=part, inc=included))
+        elif part not in catalogue['MPNs'].values:
+            included = FALSE
+            return redirect(url_for('results', pt=part, inc=included))
     else:
         return render_template('search.html', title='Search', form=form)
 
 
-@app.route("/results", methods=['GET','POST'])
-def results():
-    pass
+@app.route("/results<pt><inc>", methods=['GET','POST'])
+def results(pt,inc):
+    return render_template('results.html',title='Results',pt=pt, inc=inc)
