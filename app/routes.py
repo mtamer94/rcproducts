@@ -32,26 +32,25 @@ def login():
     return render_template('login.html', title = 'Sign In', form=form)
 
 
-# the problems start here
+# the problem is when I try to return results template
 @app.route("/search", methods=['GET','POST'])
 def search():
     form = mpnForm()
-    # I am going to need to do the logic to search for MPNs here
     if form.validate_on_submit():
         part = form.mpn.data
-        included = None
+        message = ''
         catalogue = pd.read_csv(data_path)
         if part in catalogue['MPNs'].values:
             # if the part is in the catalog, return the result on a new page
-            included = TRUE
-            return redirect(url_for('results', pt=part, inc=included))
+            message = ' is in the catalogue.'
+            return redirect (url_for('results', pt = part, message=message))
         elif part not in catalogue['MPNs'].values:
-            included = FALSE
-            return redirect(url_for('results', pt=part, inc=included))
+            message = ' is not in the catalogue.'
+            return redirect (url_for('results', pt = part, message=message))
     else:
         return render_template('search.html', title='Search', form=form)
 
 
-@app.route("/results<pt><inc>", methods=['GET','POST'])
-def results(pt,inc):
-    return render_template('results.html',title='Results',pt=pt, inc=inc)
+@app.route("/<pt><message>", methods=['GET','POST'])
+def results(pt,message):
+    return render_template('results.html',title='Results',pt=pt, message=message)
