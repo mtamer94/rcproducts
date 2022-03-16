@@ -39,7 +39,7 @@ def search():
     # I am going to need to do the logic to search for MPNs here
     if form.validate_on_submit():
         part = form.mpn.data
-        included = ''
+        included = None
         catalogue = pd.read_csv(data_path)
         if part in catalogue['MPNs'].values:
             # if the part is in the catalog, return the result on a new page
